@@ -17,7 +17,7 @@ public class UrlManager {
 		List<Url> l = new ArrayList<>();
 		
 		for(Element e : td) {
-			if(!e.text().equals("*")) {
+			if(!e.text().equals("*") && !e.text().contains("#") && !e.text().equals("The Apple family")) {
 				l.add(new Url(e.attr("abs:href")));
 			}
 		}

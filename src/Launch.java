@@ -1,13 +1,14 @@
 import java.io.IOException;
+import java.util.List;
 
-import urls.Url;
-import urls.UrlManager;
+import ponies.CharacterManager;
+import ponies.Character;
+
 
 public class Launch {
 
 	public static void main(String[] args) throws IOException {
-		for (Url u : UrlManager.getAllUrl()) {
-			System.out.println(u.toString());
-		}
+		List<Character> ponies = CharacterManager.createCharacters();
+		System.out.println(ponies);
 	}
 }
