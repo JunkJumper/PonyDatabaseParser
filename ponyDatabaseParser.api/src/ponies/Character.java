@@ -8,15 +8,13 @@ public class Character {
 	private String name;
 	private String description;
 	private List<String> kind;
-	private String gender;
 	private List<String> residence;
 	private Url image;
 	
-	public Character(String name, String description, List<String> kind, String gender, List<String> residence, Url image) {
+	public Character(String name, String description, List<String> kind, List<String> residence, Url image) {
 		this.name = name;
 		this.description = description;
 		this.kind = kind;
-		this.gender = gender;
 		this.residence = residence;
 		this.image = image;
 	}
@@ -33,10 +31,6 @@ public class Character {
 		return kind;
 	}
 
-	public String getGender() {
-		return gender;
-	}
-
 	public List<String> getResidence() {
 		return residence;
 	}
@@ -48,7 +42,7 @@ public class Character {
 
 	@Override
 	public String toString() {
-		return name + ";" + description + ";" + kind + ";" + gender + ";" + residence + ";" + image;
+		return name + ";" + description + ";" + kind + ";" + ";" + residence + ";" + image;
 	}
 
 

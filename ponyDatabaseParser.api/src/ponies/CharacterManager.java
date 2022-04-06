@@ -16,18 +16,19 @@ public class CharacterManager {
 	
 	public static List<Character> createCharacters() throws IOException {
 		List<Character> l = new ArrayList<>();
-		
+		int i = 1;
+		int max = UrlManager.getAllUrl().size();
 		for(Url u : UrlManager.getAllUrl()) {
 			
 			l.add(new Character(getName(u),
 						getDesc(u),
 						getKinds(u),
-						getGender(u),
 						getResidences(u),
 						new Url(getImageUrl(u))
 					)
 				);
-			System.out.println("Parsing " + getName(u));
+			System.out.println("Parsing " + getName(u) + " ("+i+"/"+max+")");
+			i++;
 		}
 		return l;
 	}
@@ -41,7 +42,7 @@ public class CharacterManager {
 	}
 	
 	private static List<String> getKinds(Url url) throws IOException {
-		List<String> kinds = null;
+		List<String> kinds = new ArrayList<>();
 		List<String> k = new ArrayList<>();
 		Document doc = Jsoup.connect(url.getUrl()).get();
 		Element tableSelector = doc.select("td:contains(Kind)").next().first();
@@ -59,20 +60,8 @@ public class CharacterManager {
 		return kinds;
 	}
 	
-	private static String getGender(Url url) throws IOException {
-		
-		Document doc = Jsoup.connect(url.getUrl()).get();
-		Element genderSelector = doc.select("td:contains(Sex)").next().first();
-		
-		if(genderSelector != null) {
-			return genderSelector.text().split("[(]")[0];
-		} else {
-			return null;
-		}
-	}
-	
 	private static List<String> getResidences(Url url) throws IOException {
-		List<String> residences = null;
+		List<String> residences = new ArrayList<>();
 		Document doc = Jsoup.connect(url.getUrl()).get();
 		Element residenceSelector = doc.select("td:contains(Residence)").next().first();
 		
