@@ -48,9 +48,10 @@ public class Character {
 
 	@Override
 	public String toString() {
-		return "Character [name=" + name + ", description=" + description + ", kind=" + kind + ", gender=" + gender
-				+ ", residence=" + residence + ", image=" + image + "]";
+		return name + ";" + description + ";" + kind + ";" + gender + ";" + residence + ";" + image;
 	}
+
+
 	
 	
 }

@@ -27,6 +27,7 @@ public class CharacterManager {
 						new Url(getImageUrl(u))
 					)
 				);
+			System.out.println("Parsing " + getName(u));
 		}
 		return l;
 	}
