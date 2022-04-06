@@ -1,3 +1,44 @@
+<?php
+
+function getPony(String $n) {
+    include "database.env.php"; //cette instruction est necessaire pour obtenir la configuration que vous avez définie dans le fichier databases.php
+
+    try {
+    // Connection MySQL.
+        $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    } catch(Exception $e) {
+        // Si il y a une erreur, arret du script.
+            die('Erreur : '.$e->getMessage());
+    } // Récupération du contenu de la table "infos"
+
+    
+    $reponse = $bdd->query("SELECT * FROM allponies WHERE name = '$n' ;");
+    return $reponse->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$ponyName = "";
+$ponyTab = array();
+$arrayKind = array();
+$arrayPlace = array();
+
+if(isset($_GET['name'])) {
+    $ponyName = str_replace("%20", " ", $_GET['name']);
+    $ponyTab = getPony($ponyName);
+
+    for ($i=0; $i < sizeof($ponyTab); ++$i) { 
+        if(!in_array($ponyTab[$i]['kind'],$arrayKind, TRUE)) {
+            array_push($arrayKind, $ponyTab[$i]['kind']);
+        }
+        if(!in_array($ponyTab[$i]['place'],$arrayPlace, TRUE)) {
+            array_push($arrayPlace, $ponyTab[$i]['place']);
+        }
+    }
+    
+}
+
+
+?>
+
 <!doctype html>
 <html class="no-js" lang="fr">
 
@@ -37,26 +78,44 @@
         <div class="mainsection">
             <div class="article">
                 <h1>Pony database</h1>
-                <h2>Nom Poney</h2>
+                <h2><?php echo $ponyTab[0]['name']?></h2>
 
                 <div class="container">
                     <div class="row" style="display: table; height: 300px; overflow: hidden;">
                         <div class="col-md-8" style="display: table-cell; vertical-align: middle;">
                             <p class="ponyDescription">
-                                Lorem ipsum dolor sit amet consectetur, adipisicing elit. Quas voluptatibus quos culpa architecto tenetur deleniti eligendi? Asperiores, error. Saepe nostrum nemo officiis ipsam accusamus rem libero necessitatibus, praesentium sapiente? Error.
+                                <?php echo $ponyTab[0]['description']?>
                             </p>
                         </div>
                         <div class="col-md-4" style="display: table-cell; vertical-align: top;">
-                            <img src="./img/logo.png" alt="" width="100%" />
-                            <p style="text-align: center;">Pony Name</p>
+                            <?php 
+                                if(str_contains($ponyTab[0]['image'], "https://")) {
+                                    echo '<td>'
+                                        .'<img src="' . explode(".png", $ponyTab[0]['image'])[0].'.png" alt="image du poney" width="100% />"'
+                                    .'</td>';
+                                } else {
+                                    echo '<img src="./img/logo.png" alt="" width="100%" />';
+                                }
+                            ?>
+                            <p style="text-align: center;"><?php echo $ponyTab[0]['name']?></p>
                         </div>
                     </div>
                     <div class="row" style="text-align: center;">
                         <div class="col-md-4">
                             <p>Espèces :</p>
+                            <?php
+                                for ($i=0; $i < sizeof($arrayKind); ++$i) { 
+                                    echo "<li>$arrayKind[$i]</li>";
+                                }
+                            ?>
                         </div>
                         <div class="col-md-4">
                             <p>Lieux :</p>
+                            <?php
+                                for ($i=0; $i < sizeof($arrayPlace); ++$i) { 
+                                    echo "<li>$arrayPlace[$i]</li>";
+                                }
+                            ?>
                         </div>
                     </div>
                 </div>

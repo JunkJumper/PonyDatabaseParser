@@ -1,3 +1,32 @@
+<?php
+
+function getAllponies(String $name) {
+    include "database.env.php"; //cette instruction est necessaire pour obtenir la configuration que vous avez définie dans le fichier databases.php
+
+    try {
+    // Connection MySQL.
+        $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    } catch(Exception $e) {
+        // Si il y a une erreur, arret du script.
+            die('Erreur : '.$e->getMessage());
+    } // Récupération du contenu de la table "infos"
+
+    $reponse = $bdd->query("SELECT * FROM allponies WHERE name LIKE '%$name%';");
+    return $reponse->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$displayTab = false;
+$allPoniesTab = array();
+
+if(isset($_POST['ponyName'])) {
+    if($_POST['ponyName'] != "") {
+        $displayTab = true;
+        $allPoniesTab = getAllponies($_POST['ponyName']);
+    }
+}
+?>
+
+
 <!doctype html>
 <html class="no-js" lang="fr">
 
@@ -39,7 +68,7 @@
                 <h1>Pony database</h1>
                 <h2>Recherche par nom</h2>
 
-                <form class="form-horizontal">
+                <form class="form-horizontal" action="./searchByName.php" method="post">
                     <fieldset>
                         <!-- Text input-->
                         <div class="form-group">
@@ -52,34 +81,59 @@
                         <!-- Button -->
                         <div class="form-group">
                             <div class="col-md-6">
-                                <button id="singlebutton" name="singlebutton" class="btn btn-info">Chercher</button>
+                                <button id="singlebutton" name="singlebutton" class="btn btn-info" value="submit">Chercher</button>
                             </div>
                         </div>
 
                     </fieldset>
                 </form>
 
+                        <?php
 
-                <table style="width: 100%;margin-top: 10px;">
-                    <tbody>
-                        <tr>
-                            <th>Nom</th>
-                            <th>Description</th>
-                            <th>Espèce</th>
-                            <th>Genre</th>
-                            <th>Lieu</th>
-                            <th>Image</th>
-                        </tr>
-                        <tr>
-                            <td>.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                </table>
+                        if($displayTab) {
+
+                            echo '<table style="width: 100%;margin-top: 10px;">'
+                            .'<tbody>'
+                                .'<tr>'
+                                    .'<th>Nom</th>'
+                                    .'<th>Description</th>'
+                                    .'<th>Lieu</th>'
+                                    .'<th>Espèce</th>'
+                                    .'<th>Image</th>'
+                                    .'<th>Voir fiche poney</th>'
+                                .'</tr>';
+
+                            foreach ($allPoniesTab as $var => $v) {
+                                echo '<tr>';
+                                
+                                foreach ($v as $object => $value) {
+                                    if(str_contains($value, "https://")) {
+                                        echo '<td>'
+                                            .'<img src="' . explode(".png", $value)[0].'.png" alt="image du poney" width="100% />"'
+                                        .'</td>';
+                                    } else if(str_contains($value, "data:image")) {
+                                        echo '<td>No displayable image</td>';
+                                    } else {
+                                        echo "<td>$value</td>";
+                                    }
+                                }
+                                
+                                $ponyName = $v['name'];
+
+                            echo '<td>'
+                                .'<a href="./pony.php?name=' .$ponyName .'" class="btn btn-info">Voir fiche de '. $ponyName .'</a>'
+                            .'</td>';
+                                echo '</tr>';
+                            }
+
+                            echo '</tbody>'
+                            .'</table>';
+                        }
+
+
+                        
+                        ?>
+
 
 
                 <div class="middleButtons">

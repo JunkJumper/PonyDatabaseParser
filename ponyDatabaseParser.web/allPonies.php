@@ -1,3 +1,23 @@
+<?php
+
+function getAllponies() {
+    include "database.env.php"; //cette instruction est necessaire pour obtenir la configuration que vous avez définie dans le fichier databases.php
+
+    try {
+    // Connection MySQL.
+        $bdd = new PDO("mysql:host=$servername;dbname=$dbname", $username, $password);
+    } catch(Exception $e) {
+        // Si il y a une erreur, arret du script.
+            die('Erreur : '.$e->getMessage());
+    } // Récupération du contenu de la table "infos"
+
+    $reponse = $bdd->query('SELECT * FROM allponies');
+    return $reponse->fetchAll(PDO::FETCH_ASSOC);
+}
+
+$allPoniesTab = getAllponies();
+?>
+
 <!doctype html>
 <html class="no-js" lang="fr">
 
@@ -46,16 +66,40 @@
                         <tr>
                             <th>Nom</th>
                             <th>Description</th>
-                            <th>Espèce</th>
                             <th>Lieu</th>
+                            <th>Espèce</th>
                             <th>Image</th>
+                            <th>Voir fiche poney</th>
                         </tr>
                         <tr>
-                            <td>.</td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
+                        
+                        <?php
+                        foreach ($allPoniesTab as $var => $v) {
+                            echo '<tr>';
+
+                            foreach ($v as $object => $value) {
+                                if(str_contains($value, "https://")) {
+                                    echo '<td>'
+                                        .'<img src="' . explode(".png", $value)[0].'.png" alt="image du poney" width="100% />"'
+                                    .'</td>';
+                                } else if(str_contains($value, "data:image")) {
+                                    echo '<td>No displayable image</td>';
+                                } else {
+                                    echo "<td>$value</td>";
+                                }
+                            }
+
+                            $ponyName = $v['name'];
+
+                            echo '<td>'
+                                .'<a href="./pony.php?name=' .$ponyName .'" class="btn btn-info">Voir fiche de '. $ponyName .'</a>'
+                            .'</td>';
+                            
+                            echo '</tr>';
+                        }
+                        
+                        ?>
+                        
                         </tr>
                     </tbody>
                 </table>
