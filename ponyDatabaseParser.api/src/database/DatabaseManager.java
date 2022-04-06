@@ -38,6 +38,7 @@ public class DatabaseManager {
 		
 		return sb;
 	}
+
 	
 	private void fillKinds() {
 		for(Character c : ponies) {
@@ -64,7 +65,7 @@ public class DatabaseManager {
 		String sb="";
 		int i = 1;
 		for(String k : this.kinds) {
-			sb += "INSERT INTO ponies_kind (id, name) VALUES (" + i + ",`" + k.toString() +"`);\n";
+			sb += "INSERT INTO ponies_kind (id, name) VALUES (" + i + ",'" + k.toString().replace("'", "\\'") +"');\n";
 			System.out.println("Writting SQL for " + k.toString());
 			i++;
 		}
@@ -77,7 +78,7 @@ public class DatabaseManager {
 		String sb="";
 		int i = 1;
 		for(String p : this.places) {
-			sb += "INSERT INTO ponies_place (id, name) VALUES (" + i + ",`" + p.toString() +"`);\n";
+			sb += "INSERT INTO ponies_place (id, name) VALUES (" + i + ",'" + p.toString().replace("'", "\\'") +"');\n";
 			System.out.println("Writting SQL for " + p.toString());
 			i++;
 		}
@@ -96,20 +97,20 @@ public class DatabaseManager {
 			if(!characterNameList.contains(c.getName())) {
 				//Character Creation
 				sb += "INSERT INTO ponies_character (id, name, description, image) VALUES ("+
-				ci+",`"+
-				c.getName()+"`,`"+
-				c.getDescription()+"`,`"+
-				c.getImage().toString()+"`); \n";
+				ci+",'"+
+				c.getName().replace("'", "\\'")+"','"+
+				c.getDescription().replace("'", "\\'")+"','"+
+				c.getImage().toString()+"'); \n";
 				
 				
 				//Assoc Character Place
 				for(String r : c.getResidence()) {
-					sb += "INSERT INTO ponies_AssocCharacterPlace (Character_id, Place_id) VALUES (" + ci +"," + places.indexOf(r)+");\n";
+					sb += "INSERT INTO ponies_AssocCharacterPlace (Character_id, Place_id) VALUES (" + ci +"," + (places.indexOf(r)+1)+");\n";
 				}
 				
 				//Assoc Character Kind
 				for(String k : c.getKind()) {
-					sb += "INSERT INTO ponies_AssocCharacterKind (Character_id, Kind_id) VALUES (" + ci + "," + kinds.indexOf(k)+");\n";
+					sb += "INSERT INTO ponies_AssocCharacterKind (Character_id, Kind_id) VALUES (" + ci + "," + (kinds.indexOf(k)+1)+");\n";
 				}
 				
 				characterNameList.add(c.getName());

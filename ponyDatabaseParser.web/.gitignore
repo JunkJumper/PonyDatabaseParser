@@ -1,0 +1,2 @@
+# ignore real db logs
+database.env.php

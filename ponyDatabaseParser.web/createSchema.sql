@@ -4,34 +4,24 @@
 CREATE TABLE IF NOT EXISTS ponies_Kind
 (
     id INT NOT NULL,
-    name VARCHAR(30),
+    name VARCHAR(500),
     PRIMARY KEY(id)
 );
 
 CREATE TABLE IF NOT EXISTS ponies_Place
 (
     id INT NOT NULL,
-    name VARCHAR(30),
+    name VARCHAR(500),
     PRIMARY KEY(id)
 );
 
-CREATE TABLE IF NOT EXISTS ponies_Gender
-(
-    id INT NOT NULL,
-    name VARCHAR(15),
-    PRIMARY KEY(id)
-);
 
 CREATE TABLE IF NOT EXISTS ponies_Character
 (
     id INT NOT NULL,
-    name VARCHAR(50),
-    description VARCHAR(0),
-    image VARCHAR(0),
-    Gender_id INT,
-    Kind_id INT,
-    Place_id INT,
-    Gender_id INT,
+    name VARCHAR(500),
+    description VARCHAR(500),
+    image VARCHAR(500),
     PRIMARY KEY(id)
 );
 
@@ -51,42 +41,23 @@ CREATE TABLE IF NOT EXISTS ponies_AssocCharacterPlace
 
 
 # Create FKs
-ALTER TABLE Character
-    ADD    FOREIGN KEY (Gender_id)
-    REFERENCES ponies_Gender(id)
-;
     
-ALTER TABLE Character
-    ADD    FOREIGN KEY (Kind_id)
-    REFERENCES ponies_Kind(id)
-;
-    
-ALTER TABLE Character
-    ADD    FOREIGN KEY (Place_id)
-    REFERENCES ponies_Place(id)
-;
-    
-ALTER TABLE Character
-    ADD    FOREIGN KEY (Gender_id)
-    REFERENCES ponies_Gender(id)
-;
-    
-ALTER TABLE AssocCharacterKind
+ALTER TABLE ponies_assocCharacterKind
     ADD    FOREIGN KEY (Character_id)
     REFERENCES ponies_Character(id)
 ;
     
-ALTER TABLE AssocCharacterKind
+ALTER TABLE ponies_assocCharacterKind
     ADD    FOREIGN KEY (Kind_id)
     REFERENCES ponies_Kind(id)
 ;
     
-ALTER TABLE AssocCharacterPlace
+ALTER TABLE ponies_assocCharacterPlace
     ADD    FOREIGN KEY (Character_id)
     REFERENCES ponies_Character(id)
 ;
     
-ALTER TABLE AssocCharacterPlace
+ALTER TABLE ponies_assocCharacterPlace
     ADD    FOREIGN KEY (Place_id)
     REFERENCES ponies_Place(id)
 ;

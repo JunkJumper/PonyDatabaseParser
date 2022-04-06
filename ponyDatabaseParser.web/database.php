@@ -11,6 +11,7 @@
  *  ----------------------------------------------------------------------------
  *
  * Le but de ce script est de définir les variables pour vos connexions à vos BDD
+ * Rennomez ce fichier par database.env.php pour utilisation
  */
 
 $servername = "localhost"; //Vous devez remplacer ici le "localhost" par l'adresse de votrebase de données

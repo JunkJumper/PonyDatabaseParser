@@ -54,7 +54,7 @@
 <body>
     <h1>Page Not Found</h1>
     <img src="./img/404.jpg" alt="404 image" width="40%" /><br /><br />
-    <a href="index.html" class="btn btn-danger">Retourner au site</a>
+    <a href="index.php" class="btn btn-danger">Retourner au site</a>
 </body>
 
 </html>

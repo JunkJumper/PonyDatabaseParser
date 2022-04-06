@@ -17,18 +17,18 @@
     <div class="wrapAll clearfix">
         <div class="sidebar">
             <div class="logo">
-                <a href="index.html"><img src='img/logo.png' alt="logo"></a>
+                <a href="index.php"><img src='img/logo.png' alt="logo"></a>
             </div>
             <div class="navigation">
                 <ul>
-                    <li><a href="index.html">Homepage</a></li>
-                    <li><a href="allPonies.html">Afficher tous les poneys</a></li>
+                    <li><a href="index.php">Homepage</a></li>
+                    <li><a href="allPonies.php">Afficher tous les poneys</a></li>
                 </ul>
                 <h3>Recherche</h3>
                 <ul>
-                    <li><a href="searchByName.html">Par nom</a></li>
-                    <li><a href="searchByKind.html">Par espèce</a></li>
-                    <li><a href="searchByLocation.html">Par lieu</a></li>
+                    <li><a href="searchByName.php">Par nom</a></li>
+                    <li><a href="searchByKind.php">Par espèce</a></li>
+                    <li><a href="searchByLocation.php">Par lieu</a></li>
                 </ul>
             </div>
 
@@ -62,10 +62,10 @@
 
 
                 <div class="middleButtons">
-                    <a href="./allPonies.html" class="btn btn-primary">Afficher tous les poneys</a>
-                    <a href="./searchByName.html" class="btn btn-primary">Recherche par nom</a>
-                    <a href="./searchByKind.html" class="btn btn-primary">Recherche par espèce</a>
-                    <a href="./searchByLocation.html" class="btn btn-primary">Recherche par lieu</a>
+                    <a href="./allPonies.php" class="btn btn-primary">Afficher tous les poneys</a>
+                    <a href="./searchByName.php" class="btn btn-primary">Recherche par nom</a>
+                    <a href="./searchByKind.php" class="btn btn-primary">Recherche par espèce</a>
+                    <a href="./searchByLocation.php" class="btn btn-primary">Recherche par lieu</a>
                 </div>
 
             </div>
